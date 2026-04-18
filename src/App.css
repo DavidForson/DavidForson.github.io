@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
+
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #030306;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 1rem;
+}
+
+/* ── Root wrapper ── */
+.root {
+  width: 100%;
+  max-width: 900px;
+  min-width: 900px;
+  position: relative;
+  font-family: 'Share Tech Mono', monospace;
+  color: #b8b8cc;
+}
+
+/* ── CRT scanlines overlay ── */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ── Main card ── */
+.card {
+  border: 1px solid #252540;
+  background: rgba(6, 6, 14, 0.95);
+  width: 100%;
+}
+
+/* ── Header ── */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.4rem 1.5rem;
+  border-bottom: 1px solid #252540;
+  position: relative;
+}
+
+/* Corner brackets — pure CSS, no extra HTML needed beyond the divs */
+.corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: #444488;
+  border-style: solid;
+}
+.corner.tl { top: 8px;    left: 8px;    border-width: 1px 0 0 1px; }
+.corner.br { bottom: 8px; right: 8px;   border-width: 0 1px 1px 0; }
+
+.glitch {
+  font-family: 'VT323', monospace;
+  font-size: 2rem;
+  color: #9999cc;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  animation: glitch 8s infinite;
+}
+
+@keyframes glitch {
+  0%, 91%, 100% {
+    text-shadow: 1px 0 0 rgba(255,80,80,0.3), -1px 0 0 rgba(80,200,255,0.3);
+    transform: translate(0);
+  }
+  92% { text-shadow: 2px 0 0 rgba(255,80,80,0.7), -2px 0 0 rgba(80,200,255,0.7); transform: translate(-2px, 0); }
+  93% { text-shadow: -2px 0 0 rgba(255,80,80,0.7),  2px 0 0 rgba(80,200,255,0.7); transform: translate(2px, 0); }
+  94% { text-shadow: 1px 0 0 rgba(255,80,80,0.3), -1px 0 0 rgba(80,200,255,0.3); transform: translate(0); }
+}
+
+.sub {
+  font-size: 0.64rem;
+  color: #333355;
+  margin-top: 0.35rem;
+  letter-spacing: 0.14em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Animated pulse dot */
+.pulse {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4a4a99;
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+
+.blink { animation: blink 1.2s step-end infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  background: none;
+  border: 1px solid #252540;
+  color: #444477;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.lang-toggle:hover { color: #aaaaee; border-color: #5555aa; }
+
+/* ── Collapsible section ── */
+.sec { border-bottom: 1px solid #141422; }
+.sec:last-of-type { border-bottom: none; }
+
+.tog {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: #5a5a88;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-align: left;
+  transition: color 0.2s, background 0.2s;
+}
+.tog:hover  { color: #aaaadd; background: rgba(100,100,180,0.04); }
+.tog.open   { color: #9999cc; border-bottom: 1px solid #141422; }
+
+.arr {
+  font-size: 0.55rem;
+  color: #333360;
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+.tog.open .arr { transform: rotate(90deg); color: #6666aa; }
+
+.pre { color: #252545; }
+
+/* ── About section ── */
+.sec-body { animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+.about-inner {
+  display: flex;
+  gap: 1.1rem;
+  padding: 1.1rem 1.5rem 1.3rem;
+  align-items: flex-start;
+}
+
+.pfp-wrap {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  border: 1px solid #252540;
+  overflow: hidden;
+  position: relative;
+}
+
+.pfp-canvas {
+  width: 80px;
+  height: 80px;
+  display: block;
+  image-rendering: pixelated;
+}
+
+.about-text {
+  font-size: 0.73rem;
+  line-height: 1;
+  color: #7777aa;
+}
+
+/* ── Links section ── */
+.links-list {
+  padding: 0.8rem 1.5rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.soc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.4rem 0;
+  color: #555588;
+  text-decoration: none;
+  font-size: 0.73rem;
+  letter-spacing: 0.1em;
+  transition: color 0.15s;
+  width: fit-content;
+}
+.soc-link:hover { color: #aaaaee; }
+
+/* ── Projects ── */
+.projects-list {
+  padding: 1rem 1.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.proj-card {
+  border: 1px solid #1e1e38;
+  background: rgba(10, 10, 20, 0.7);
+}
+
+.proj-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid #1e1e38;
+  filter: grayscale(50%) brightness(0.75) sepia(20%);
+}
+
+.proj-content { padding: 0.9rem 1rem; }
+
+.proj-name {
+  font-size: 0.78rem;
+  color: #7777bb;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+}
+
+.proj-desc {
+  font-size: 0.71rem;
+  color: #555577;
+  line-height: 1.75;
+  margin-bottom: 0.6rem;
+}
+
+.proj-tags { margin-bottom: 0.75rem; }
+
+.tag {
+  display: inline-block;
+  font-size: 0.6rem;
+  padding: 1px 6px;
+  border: 1px solid #1e1e38;
+  color: #3d3d66;
+  margin-right: 4px;
+  letter-spacing: 0.07em;
+}
+
+.proj-links {
+  display: flex;
+  gap: 1.2rem;
+  border-top: 1px solid #141428;
+  padding-top: 0.7rem;
+}
+
+.proj-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  color: #4a4a88;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  transition: color 0.15s;
+}
+.proj-link:hover { color: #aaaaee; }
+
+/* ── Status bar ── */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.45rem 1.5rem;
+  border-top: 1px solid #141422;
+  font-size: 0.6rem;
+  color: #252540;
+  letter-spacing: 0.1em;
+}
